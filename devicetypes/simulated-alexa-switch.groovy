@@ -13,28 +13,30 @@
  */
 metadata {
 
-    definition (name: "Alexa Switch", namespace: "bjpierron", author: "bjpierron", runLocally: false, mnmn: "SmartThings", vid: "generic-switch") {
+    definition (name: "Simulated Switch", namespace: "smartthings/testing", author: "bob", runLocally: false, mnmn: "SmartThings", vid: "generic-switch") {
         capability "Switch"
         capability "Relay Switch"
         capability "Sensor"
         capability "Actuator"
         capability "Health Check"
-        
-        capability "Contact Sensor"
+
+        command "onPhysical"
+        command "offPhysical"
 
         command    "markDeviceOnline"
         command    "markDeviceOffline"
     }
-    
-    simulator {
-		status "open": "contact:open"
-		status "closed": "contact:closed"
-	}
 
     tiles {
         standardTile("switch", "device.switch", width: 2, height: 2, canChangeIcon: true) {
             state "off", label: '${currentValue}', action: "switch.on", icon: "st.switches.switch.off", backgroundColor: "#ffffff"
             state "on", label: '${currentValue}', action: "switch.off", icon: "st.switches.switch.on", backgroundColor: "#00A0DC"
+        }
+        standardTile("on", "device.switch", decoration: "flat") {
+            state "default", label: 'On', action: "onPhysical", backgroundColor: "#ffffff"
+        }
+        standardTile("off", "device.switch", decoration: "flat") {
+            state "default", label: 'Off', action: "offPhysical", backgroundColor: "#ffffff"
         }
         standardTile("deviceHealthControl", "device.healthStatus", decoration: "flat", width: 1, height: 1, inactiveLabel: false) {
             state "online",  label: "ONLINE", backgroundColor: "#00A0DC", action: "markDeviceOffline", icon: "st.Health & Wellness.health9", nextState: "goingOffline", defaultState: true
@@ -88,16 +90,22 @@ def parse(description) {
 def on() {
     log.debug "$version on()"
     sendEvent(name: "switch", value: "on")
-    sendEvent(name: "contact", value: "open")
 }
 
 def off() {
     log.debug "$version off()"
     sendEvent(name: "switch", value: "off")
-    sendEvent(name: "contact", value: "closed")
 }
 
+def onPhysical() {
+    log.debug "$version onPhysical()"
+    sendEvent(name: "switch", value: "on", type: "physical")
+}
 
+def offPhysical() {
+    log.debug "$version offPhysical()"
+    sendEvent(name: "switch", value: "off", type: "physical")
+}
 
 private getVersion() {
     "PUBLISHED"
