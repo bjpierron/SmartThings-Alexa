@@ -49,8 +49,8 @@ def parse(String description) {
 def push() {
 	sendEvent(name: "switch", value: "on", isStateChange: true, display: false)
 	sendEvent(name: "switch", value: "off", isStateChange: true, display: false)
-	sendEvent(name: "contact", value: "open")
-	sendEvent(name: "contact", value: "closed")
+	sendEvent(name: "contact", value: "open", isStateChange: true)
+	sendEvent(name: "contact", value: "closed", isStateChange: true)
 	sendEvent(name: "momentary", value: "pushed", isStateChange: true)
 }
 
