@@ -12,7 +12,7 @@
  *
  */
 metadata {
-	definition (name: "Simulated Button", namespace: "smartthings/testing", author: "SmartThings") {
+	definition (name: "Simulated Alexa Button", namespace: "bjpierron", author: "bjpierron") {
 		capability "Actuator"
 		capability "Button"
 		capability "Sensor"
