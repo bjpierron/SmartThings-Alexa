@@ -10,56 +10,54 @@
  *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  *  for the specific language governing permissions and limitations under the License.
  *
+ *  Momentary Button Tile
+ *
+ *  Author: SmartThings
+ *
+ *  Date: 2013-05-01
  */
 metadata {
 	definition (name: "Simulated Alexa Button", namespace: "bjpierron", author: "bjpierron") {
 		capability "Actuator"
-		capability "Button"
+		capability "Switch"
+		capability "Momentary"
 		capability "Sensor"
-		capability "Health Check"
 		capability "Contact Sensor"
-        
-        command "push1"
 	}
 
+	// simulator metadata
 	simulator {
-		status "pushed": "contact:pushed"
+		status "open": "contact:open"
+		status "closed": "contact:closed"
+
 	}
+
+	// UI tile definitions
 	tiles {
-		standardTile("button", "device.button", width: 1, height: 1) {
-			state "default", label: "", icon: "st.unknown.zwave.remote-controller", backgroundColor: "#ffffff"
+		standardTile("switch", "device.switch", width: 2, height: 2, canChangeIcon: true) {
+			state "off", label: 'Push', action: "momentary.push", backgroundColor: "#ffffff", nextState: "on"
+			state "on", label: 'Push', action: "momentary.push", backgroundColor: "#53a7c0"
 		}
- 		standardTile("push1", "device.button", width: 1, height: 1, decoration: "flat") {
-			state "default", label: "Push 1", backgroundColor: "#ffffff", action: "push1"
-		} 
-		main "button"
-		details(["button","push1"])
+		main "switch"
+		details "switch"
 	}
 }
 
 def parse(String description) {
-	
 }
 
-def push1() {
-	sendEvent(name: "button", value: "pushed", data: [buttonNumber: "1"], descriptionText: "$device.displayName button 1 was pushed", isStateChange: true)
-	sendEvent(name: "contact", value: "pushed")
+def push() {
+	sendEvent(name: "switch", value: "on", isStateChange: true, display: false)
+	sendEvent(name: "switch", value: "off", isStateChange: true, display: false)
+	sendEvent(name: "contact", value: "open")
+	sendEvent(name: "contact", value: "closed")
+	sendEvent(name: "momentary", value: "pushed", isStateChange: true)
 }
 
-def installed() {
-	log.trace "Executing 'installed'"
-	initialize()
+def on() {
+	push()
 }
 
-def updated() {
-	log.trace "Executing 'updated'"
-	initialize()
-}
-
-private initialize() {
-	log.trace "Executing 'initialize'"
-
-	sendEvent(name: "DeviceWatch-DeviceStatus", value: "online")
-	sendEvent(name: "healthStatus", value: "online")
-	sendEvent(name: "DeviceWatch-Enroll", value: [protocol: "cloud", scheme:"untracked"].encodeAsJson(), displayed: false)
+def off() {
+	push()
 }
