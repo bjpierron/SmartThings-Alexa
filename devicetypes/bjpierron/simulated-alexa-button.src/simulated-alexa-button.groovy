@@ -17,13 +17,13 @@ metadata {
 		capability "Button"
 		capability "Sensor"
 		capability "Health Check"
+		capability "Contact Sensor"
         
         command "push1"
-        command "hold1"
 	}
 
 	simulator {
-
+		status "pushed": "contact:pushed"
 	}
 	tiles {
 		standardTile("button", "device.button", width: 1, height: 1) {
@@ -32,11 +32,8 @@ metadata {
  		standardTile("push1", "device.button", width: 1, height: 1, decoration: "flat") {
 			state "default", label: "Push 1", backgroundColor: "#ffffff", action: "push1"
 		} 
- 		standardTile("hold1", "device.button", width: 1, height: 1, decoration: "flat") {
-			state "default", label: "Hold 1", backgroundColor: "#ffffff", action: "hold1"
-		}          
 		main "button"
-		details(["button","push1","hold1"])
+		details(["button","push1"])
 	}
 }
 
@@ -44,12 +41,9 @@ def parse(String description) {
 	
 }
 
-def hold1() {
-	sendEvent(name: "button", value: "held", data: [buttonNumber: "1"], descriptionText: "$device.displayName button 1 was held", isStateChange: true)
-} 
-
 def push1() {
 	sendEvent(name: "button", value: "pushed", data: [buttonNumber: "1"], descriptionText: "$device.displayName button 1 was pushed", isStateChange: true)
+	sendEvent(name: "contact", value: "pushed")
 }
 
 def installed() {
