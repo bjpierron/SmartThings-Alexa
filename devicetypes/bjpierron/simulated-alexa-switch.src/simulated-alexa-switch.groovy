@@ -19,6 +19,7 @@ metadata {
         capability "Sensor"
         capability "Actuator"
         capability "Health Check"
+        capability "Contact Sensor"
 
         command "onPhysical"
         command "offPhysical"
@@ -26,6 +27,11 @@ metadata {
         command    "markDeviceOnline"
         command    "markDeviceOffline"
     }
+    
+    simulator {
+		status "open": "contact:open"
+		status "closed": "contact:closed"
+	}
 
     tiles {
         standardTile("switch", "device.switch", width: 2, height: 2, canChangeIcon: true) {
@@ -90,21 +96,25 @@ def parse(description) {
 def on() {
     log.debug "$version on()"
     sendEvent(name: "switch", value: "on")
+    sendEvent(name: "contact", value: "open")
 }
 
 def off() {
     log.debug "$version off()"
     sendEvent(name: "switch", value: "off")
+    sendEvent(name: "contact", value: "closed")
 }
 
 def onPhysical() {
     log.debug "$version onPhysical()"
     sendEvent(name: "switch", value: "on", type: "physical")
+    sendEvent(name: "contact", value: "open")
 }
 
 def offPhysical() {
     log.debug "$version offPhysical()"
     sendEvent(name: "switch", value: "off", type: "physical")
+    sendEvent(name: "contact", value: "closed")
 }
 
 private getVersion() {
