@@ -18,7 +18,13 @@ metadata {
         capability "Actuator"
         capability "Sensor"
         capability "Switch"
+        capability "Contact Sensor"
     }
+   
+    simulator {
+		status "open": "contact:open"
+		status "closed": "contact:closed"
+	}
 
     preferences {}
 
@@ -50,10 +56,12 @@ def parse(String description) {
 
 def on() {
     sendEvent(name: "switch", value: "on", isStateChange: true)
+    sendEvent(name: "contact", value: "open")
 }
 
 def off() {
     sendEvent(name: "switch", value: "off", isStateChange: true)
+    sendEvent(name: "contact", value: "closed")
 }
 
 def installed() {
