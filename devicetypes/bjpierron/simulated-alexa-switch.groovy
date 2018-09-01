@@ -13,7 +13,7 @@
  */
 metadata {
 
-    definition (name: "Simulated Switch", namespace: "smartthings/testing", author: "bob", runLocally: false, mnmn: "SmartThings", vid: "generic-switch") {
+    definition (name: "Simulated Alexa Switch", namespace: "bjpierron", author: "bjpierron", runLocally: false, mnmn: "SmartThings", vid: "generic-switch") {
         capability "Switch"
         capability "Relay Switch"
         capability "Sensor"
