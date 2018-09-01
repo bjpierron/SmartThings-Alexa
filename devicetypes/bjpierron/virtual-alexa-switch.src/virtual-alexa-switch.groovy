@@ -14,7 +14,7 @@
  *
  */
 metadata {
-    definition (name: "Virtual Switch", namespace: "smartthings", author: "SmartThings", runLocally: true, minHubCoreVersion: '000.021.00001', executeCommandsLocally: true, mnmn: "SmartThings", vid: "generic-switch") {
+    definition (name: "Virtual Alexa Switch", namespace: "bjpierron", author: "bjpierron", runLocally: true, minHubCoreVersion: '000.021.00001', executeCommandsLocally: true, mnmn: "SmartThings", vid: "generic-switch") {
         capability "Actuator"
         capability "Sensor"
         capability "Switch"
