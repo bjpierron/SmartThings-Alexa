@@ -12,7 +12,7 @@
  *
  */
 metadata {
-	definition (name: "Simulated Alexa Button", namespace: "bjpierron", author: "bjpierron") {
+	definition (name: "Simulated Alexa Button-Contact Relay", namespace: "bjpierron", author: "bjpierron") {
 		capability "Actuator"
 		capability "Switch"
 		capability "Momentary"
